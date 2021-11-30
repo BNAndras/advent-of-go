@@ -1,7 +1,7 @@
 package req
 
 import (
-	"advent-of-go-2020/secrets"
+	advent_of_go "advent-of-go"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -15,7 +15,7 @@ func MakeRequest(day int) string {
 		panic(err)
 	}
 
-	req.Header.Set("Cookie", secrets.Session)
+	req.Header.Set("Cookie", advent_of_go.Session)
 
 	client := http.Client{}
 	response, err := client.Do(req)
