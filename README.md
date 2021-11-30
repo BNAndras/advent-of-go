@@ -24,7 +24,7 @@ In order for the fetch utils to work properly:
 Your project structure should look like this:  
 
 ```
-advent-of-go-2020/
+advent-of-go/
 ├── calendar/
 │   ├── day-01/
 │   │   ├── day01.go
