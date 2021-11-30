@@ -1,10 +1,5 @@
-# advent-of-go-2020
-Advent of Code 2020 in golang  
-
-These are by no means good or fast solutions, just my personal repo to keep tracks of this years progress  
-Please no Intcode..... ~~*(doesn't look like it yet :))))))))*~~ Update: well kinda... but it's okay so far.
-
-For python solutions check [Logxn/Advent-of-Code-2020](https://github.com/Logxn/Advent-of-Code-2020)
+# advent-of-go
+Advent of Code in golang  
 
 ## Makefile
 Use `make new` in the terminal to automatically create a new folder with the important files for the day.  
@@ -26,7 +21,7 @@ In order for the fetch utils to work properly:
 - place your session-key inside session.go. You can find your session key in your session cookie when visiting the website
 
 <br />
-Your project structure should look likes this:  
+Your project structure should look like this:  
 
 ```
 advent-of-go-2020/
@@ -64,7 +59,7 @@ const (
 ```golang
 package main
 
-import "advent-of-go-2020/utils"
+import "advent-of-go/utils"
 
 func main() {
 	input := utils.ReadFile(1, "\n")
