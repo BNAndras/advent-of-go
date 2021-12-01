@@ -12,29 +12,22 @@ func main() {
 }
 
 func solvePart1(input []string) int {
-	result := 0
 	vals := conv.ToIntSlice(input)
-	//vals = []int{199, 200, 208, 210, 200, 207, 240, 269, 260, 263}
 
-	for i := 1; i < len(vals); i++ {
-		if vals[i] > vals[i-1] {
-			result += 1
-		}
-	}
-
-	return result
+	return checkIncreasingDepths(vals, 1)
 }
 
 func solvePart2(input []string) int {
-	result := 0
-
 	vals := conv.ToIntSlice(input)
-	//vals = []int{607, 618, 618, 617, 647, 716, 769, 792}
 
-	prev := sum(vals[:3])
+	return checkIncreasingDepths(vals, 3)
+}
 
-	for i := 3; i < len(vals); i++ {
-		curr := prev - vals[i-3] + vals[i]
+func checkIncreasingDepths(depths []int, n int) int {
+	result := 0
+	prev := sum(depths[:n])
+	for i := n; i < len(depths); i++ {
+		curr := prev - depths[i-n] + depths[i]
 		if curr > prev {
 			result += 1
 		}
