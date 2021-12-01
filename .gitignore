@@ -1,3 +1,4 @@
 /secrets
 .idea
 secrets.go
+puzzle-input.in

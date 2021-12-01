@@ -17,12 +17,11 @@ func ReadFile(day int, delimiter string) []string {
 	if len(currentDay) == 1 {
 		currentDay = "0" + currentDay
 	}
-
-	filePath := fmt.Sprintf("calendar/day-%v/puzzle-input.in", currentDay)
+	filePath := fmt.Sprintf("/Users/anagy/Projects/advent-of-go/calendar/day-%v/puzzle-input.in", currentDay)
 	if _, err := os.Stat(filePath); os.IsNotExist(err) {
 		createFile(day, filePath)
 	} else {
-		fmt.Println("INFO: File already exists.. Will not create new one")
+		//fmt.Println("INFO: File already exists.. Will not create new one")
 	}
 
 	file, err := ioutil.ReadFile(filePath)
