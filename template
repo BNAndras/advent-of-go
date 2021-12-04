@@ -6,13 +6,18 @@ import (
 
 func main() {
 	input := files.ReadFile(x, "\n")
-	println(solvePartX(input))
+	println(solvePart1(input))
+	println(solvePart2(input))
 }
 
-func solvePartX(input []string) int {
-    result := 0
+func solvePart1(input []string) int {
+	results := 0
 
+	return results
+}
 
+func solvePart2(input []string) int {
+	results := 0
 
-    return result
+	return results
 }
