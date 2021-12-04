@@ -20,14 +20,8 @@ func solvePart1(input []string) int64 {
 	var sGamma, sEpsilon string
 
 	for i := range input[0] {
-		var ones, zeroes int
-		for _, line := range input {
-			if line[i] == one {
-				ones += 1
-			} else if line[i] == zero {
-				zeroes += 1
-			}
-		}
+		ones, zeroes := countOnesAndZeroes(input, i)
+
 		if ones > zeroes {
 			sGamma += string(one)
 			sEpsilon += string(zero)
@@ -47,4 +41,19 @@ func solvePart2(input []string) int {
 	results := 0
 
 	return results
+}
+
+func countOnesAndZeroes(input []string, position int) (int, int) {
+	var ones, zeroes int
+	for _, line := range input {
+
+		switch line[position] {
+		case one:
+			ones += 1
+		case zero:
+			zeroes += 1
+		}
+	}
+
+	return ones, zeroes
 }
