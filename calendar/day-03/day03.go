@@ -19,7 +19,6 @@ func main() {
 func solvePart1(input []string) int64 {
 	var sGamma, sEpsilon string
 
-	// check each line one index at a time
 	for i := range input[0] {
 		var ones, zeroes int
 		for _, line := range input {
