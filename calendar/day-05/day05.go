@@ -27,14 +27,7 @@ type Line struct {
 }
 
 func (l Line) direction(axis Axis) int {
-	var a, b int
-	if axis == X {
-		a = l.start.X
-		b = l.end.X
-	} else {
-		a = l.start.Y
-		b = l.end.Y
-	}
+	var a, b = l.chooseCoordinates(axis)
 
 	if a < b {
 		return 1
@@ -45,6 +38,12 @@ func (l Line) direction(axis Axis) int {
 }
 
 func (l Line) delta(axis Axis) int {
+	var a, b = l.chooseCoordinates(axis)
+
+	return maths.Abs(b - a)
+}
+
+func (l Line) chooseCoordinates(axis Axis) (int, int) {
 	var a, b int
 	if axis == X {
 		a = l.start.X
@@ -53,8 +52,7 @@ func (l Line) delta(axis Axis) int {
 		a = l.start.Y
 		b = l.end.Y
 	}
-
-	return maths.Abs(b - a)
+	return a, b
 }
 
 func main() {
@@ -64,17 +62,19 @@ func main() {
 }
 
 func solvePart1(input []string) int {
-	workingGrid := map[Coordinate]int{}
+	markedCoordinates := map[Coordinate]int{}
 	overlaps := 0
 	for _, line := range input {
 		re, _ := regexp.Compile("(\\d+),(\\d+)\\s->\\s(\\d+),(\\d+)")
 		nums := re.FindStringSubmatch(line)
-		start := Coordinate{}
-		start.X, _ = strconv.Atoi(nums[1])
-		start.Y, _ = strconv.Atoi(nums[2])
-		end := Coordinate{}
-		end.X, _ = strconv.Atoi(nums[3])
-		end.Y, _ = strconv.Atoi(nums[4])
+		start := Coordinate{
+			X: MustAtoi(nums[1]),
+			Y: MustAtoi(nums[2]),
+		}
+		end := Coordinate{
+			X: MustAtoi(nums[3]),
+			Y: MustAtoi(nums[4]),
+		}
 		line := Line{start, start, end}
 		//fmt.Println(line)
 		directionX := line.direction(X)
@@ -88,8 +88,8 @@ func solvePart1(input []string) int {
 		}
 		deltaMax := int(math.Max(float64(deltaX), float64(deltaY)))
 		for i := 0; i <= deltaMax; i++ {
-			workingGrid[line.current] += 1
-			if workingGrid[line.current] == 2 {
+			markedCoordinates[line.current] += 1
+			if markedCoordinates[line.current] == 2 {
 				overlaps += 1
 			}
 
@@ -101,17 +101,19 @@ func solvePart1(input []string) int {
 }
 
 func solvePart2(input []string) int {
-	workingGrid := map[Coordinate]int{}
+	markedCoordinates := map[Coordinate]int{}
 	overlaps := 0
 	for _, line := range input {
 		re, _ := regexp.Compile("(\\d+),(\\d+)\\s->\\s(\\d+),(\\d+)")
 		nums := re.FindStringSubmatch(line)
-		start := Coordinate{}
-		start.X, _ = strconv.Atoi(nums[1])
-		start.Y, _ = strconv.Atoi(nums[2])
-		end := Coordinate{}
-		end.X, _ = strconv.Atoi(nums[3])
-		end.Y, _ = strconv.Atoi(nums[4])
+		start := Coordinate{
+			X: MustAtoi(nums[1]),
+			Y: MustAtoi(nums[2]),
+		}
+		end := Coordinate{
+			X: MustAtoi(nums[3]),
+			Y: MustAtoi(nums[4]),
+		}
 		line := Line{start, start, end}
 		//fmt.Println(line)
 		directionX := line.direction(X)
@@ -125,8 +127,8 @@ func solvePart2(input []string) int {
 		}
 		deltaMax := int(math.Max(float64(deltaX), float64(deltaY)))
 		for i := 0; i <= deltaMax; i++ {
-			workingGrid[line.current] += 1
-			if workingGrid[line.current] == 2 {
+			markedCoordinates[line.current] += 1
+			if markedCoordinates[line.current] == 2 {
 				overlaps += 1
 			}
 
@@ -135,4 +137,9 @@ func solvePart2(input []string) int {
 		}
 	}
 	return overlaps
+}
+
+func MustAtoi(s string) int {
+	result, _ := strconv.Atoi(s)
+	return result
 }
