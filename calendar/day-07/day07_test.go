@@ -12,3 +12,14 @@ func TestPartOne(t *testing.T) {
 		t.Errorf("got %d want %d", got, want)
 	}
 }
+
+func TestPartTwo(t *testing.T) {
+	inp := []string{
+		"16,1,2,0,4,2,7,1,2,14",
+	}
+	got := solvePartTwo(inp)
+	want := 168
+	if got != want {
+		t.Errorf("got %d want %d", got, want)
+	}
+}

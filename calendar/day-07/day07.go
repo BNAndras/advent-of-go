@@ -11,7 +11,7 @@ import (
 func main() {
 	input := files.ReadFile(7, "\n")
 	println(solvePartOne(input))
-	//println(solvePartTwo(input))
+	println(solvePartTwo(input))
 }
 
 func solvePartOne(input []string) int {
@@ -22,6 +22,7 @@ func solvePartOne(input []string) int {
 	sort.Ints(positions)
 	minPos := positions[0]
 	maxPos := positions[len(positions)-1]
+
 	for i := minPos; i < maxPos; i++ {
 		currFuel := 0
 		for _, position := range positions {
@@ -37,7 +38,29 @@ func solvePartOne(input []string) int {
 }
 
 func solvePartTwo(input []string) int {
-	results := 0
+	minFuel := maths.MaxInt()
 
-	return results
+	nums := strings.Split(input[0], ",")
+	positions := conv.ToIntSlice(nums)
+	sort.Ints(positions)
+	minPos := positions[0]
+	maxPos := positions[len(positions)-1]
+
+	for i := minPos; i < maxPos; i++ {
+		currFuel := 0
+		for _, position := range positions {
+			//example fuel counts match triangular numbers
+			//https://oeis.org/A000217
+			currFuel += gaussSum(maths.Abs(i - position))
+			//fmt.Println(currFuel)
+		}
+		if currFuel < minFuel {
+			minFuel = currFuel
+		}
+	}
+	return minFuel
+}
+
+func gaussSum(n int) int {
+	return n * (1 + n) / 2
 }
