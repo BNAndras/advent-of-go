@@ -25,7 +25,7 @@ func solvePartOne(input []string) int {
 	results := 0
 
 	for _, line := range input {
-		sections := strings.Split(line, " | ")
+		sections := strings.Split(line, "|")
 		outputValue := sections[1]
 		digits := strings.Fields(outputValue)
 		for _, digit := range digits {
