@@ -1,10 +1,8 @@
 package files
 
 import (
-	"advent-of-go/utils/req"
 	"fmt"
 	"io/ioutil"
-	"os"
 	"strconv"
 	"strings"
 )
@@ -18,11 +16,6 @@ func ReadFile(day int, delimiter string) []string {
 		currentDay = "0" + currentDay
 	}
 	filePath := fmt.Sprintf("/Users/anagy/Projects/advent-of-go/calendar/day-%v/puzzle-input.in", currentDay)
-	if _, err := os.Stat(filePath); os.IsNotExist(err) {
-		createFile(day, filePath)
-	} else {
-		//fmt.Println("INFO: File already exists.. Will not create new one")
-	}
 
 	file, err := ioutil.ReadFile(filePath)
 	if err != nil {
@@ -47,17 +40,5 @@ func ReadFile(day int, delimiter string) []string {
 		slicedContent[len(slicedContent)-1] = lastElement[:len(lastElement)-1]
 
 		return slicedContent
-	}
-}
-
-func createFile(day int, filePath string) {
-	puzzleInput := req.MakeRequest(day)
-
-	err := ioutil.WriteFile(filePath, []byte(puzzleInput), 0755)
-
-	if err != nil {
-		panic(err)
-	} else {
-		fmt.Println("INFO: File successfully created")
 	}
 }

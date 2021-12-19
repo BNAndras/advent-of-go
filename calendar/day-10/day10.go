@@ -2,37 +2,49 @@ package main
 
 import (
 	"advent-of-go/utils/files"
+	"sort"
 )
 
-var partOneScores = map[rune]int{
-	')': 3,
-	']': 57,
-	'}': 1197,
-	'>': 25137,
+var partOneScores = map[string]int{
+	")": 3,
+	"]": 57,
+	"}": 1197,
+	">": 25137,
 }
 
-var delimiters = map[rune]rune{
-	')': '(',
-	']': '[',
-	'}': '{',
-	'>': '<',
+var partTwoScores = map[string]int{
+	"(": 1,
+	"[": 2,
+	"{": 3,
+	"<": 4,
 }
 
-type Stack []rune
+var delimiterPairs = map[string]string{
+	")": "(",
+	"]": "[",
+	"}": "{",
+	">": "<",
+}
 
-func (s *Stack) Pop() (rune, bool) {
-	if len(*s) == 0 {
-		return 0, false
-	} else {
-		last := len(*s) - 1
-		element := (*s)[last]
-		*s = (*s)[:last]
-		return element, true
+type Stack []string
+
+func (s *Stack) IsEmpty() bool {
+	return len(*s) == 0
+}
+
+func (s *Stack) Pop() (string, bool) {
+	if s.IsEmpty() {
+		return "", false
 	}
+
+	last := len(*s) - 1
+	element := (*s)[last]
+	*s = (*s)[:last]
+	return element, true
 }
 
-func (s *Stack) Push(r rune) {
-	*s = append(*s, r)
+func (s *Stack) Push(str string) {
+	*s = append(*s, str)
 }
 
 func main() {
@@ -47,14 +59,15 @@ func solvePartOne(input []string) int {
 	for _, line := range input {
 		var stack Stack
 		for _, char := range line {
-			if opposite, ok := delimiters[char]; ok {
+			str := string(char)
+			if opposite, ok := delimiterPairs[str]; ok {
 				if last, ok := stack.Pop(); ok {
 					if last != opposite {
-						results += partOneScores[char]
+						results += partOneScores[str]
 					}
 				}
 			} else {
-				stack.Push(char)
+				stack.Push(str)
 			}
 		}
 	}
@@ -63,7 +76,38 @@ func solvePartOne(input []string) int {
 }
 
 func solvePartTwo(input []string) int {
-	results := 0
+	var allScores []int
+	for _, line := range input {
+		var stack Stack
+		var isCorrupted bool
+		for _, char := range line {
+			str := string(char)
+			if opposite, ok := delimiterPairs[str]; ok {
+				if last, ok := stack.Pop(); ok {
+					if last != opposite {
+						isCorrupted = true
+						break
+					}
+				}
+			} else {
+				stack.Push(str)
+			}
+		}
 
-	return results
+		if isCorrupted {
+			continue
+		}
+
+		var stackScore int
+		for !stack.IsEmpty() {
+			currItem, _ := stack.Pop()
+
+			score := partTwoScores[currItem]
+			stackScore = 5*stackScore + score
+		}
+		allScores = append(allScores, stackScore)
+	}
+
+	sort.Ints(allScores)
+	return allScores[len(partTwoScores)/2]
 }
