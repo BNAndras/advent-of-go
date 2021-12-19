@@ -109,5 +109,5 @@ func solvePartTwo(input []string) int {
 	}
 
 	sort.Ints(allScores)
-	return allScores[len(partTwoScores)/2]
+	return allScores[len(allScores)/2]
 }
