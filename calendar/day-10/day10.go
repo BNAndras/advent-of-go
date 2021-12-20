@@ -5,14 +5,14 @@ import (
 	"sort"
 )
 
-var partOneScores = map[string]int{
+var partOneDelimiterScores = map[string]int{
 	")": 3,
 	"]": 57,
 	"}": 1197,
 	">": 25137,
 }
 
-var partTwoScores = map[string]int{
+var partTwoDelimiterScores = map[string]int{
 	"(": 1,
 	"[": 2,
 	"{": 3,
@@ -63,7 +63,7 @@ func solvePartOne(input []string) int {
 			if opposite, ok := delimiterPairs[str]; ok {
 				if last, ok := stack.Pop(); ok {
 					if last != opposite {
-						results += partOneScores[str]
+						results += partOneDelimiterScores[str]
 					}
 				}
 			} else {
@@ -102,7 +102,7 @@ func solvePartTwo(input []string) int {
 		for !stack.IsEmpty() {
 			currItem, _ := stack.Pop()
 
-			score := partTwoScores[currItem]
+			score := partTwoDelimiterScores[currItem]
 			stackScore = 5*stackScore + score
 		}
 		allScores = append(allScores, stackScore)
